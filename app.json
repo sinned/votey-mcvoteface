@@ -1,16 +1,19 @@
 {
-  "name": "Botkit Starter Kit",
+  "name": "Simple Slack Bot",
   "description": "A starting point for building custom Slack applications",
   "repository": "https://github.com/howdyai/botkit-starter-slack",
   "keywords": ["node", "bots", "slack","botkit"],
-  "website": "https://studio.botkit.ai/",
+  "website": "https://www.dashbot.io/",
   "success_url":"/",
   "env": {
       "clientId": {
-          "description": "Client ID provided by Slack"
+        "description": "Client ID provided by Slack"
       },
       "clientSecret": {
-          "description": "Client Secret provided by Slack"
+        "description": "Client Secret provided by Slack"
+      },
+      "DASHBOT_API_KEY": {
+        "description": "Dashbot API Key"
       }
   }
 }
