@@ -1,10 +1,4 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           ______     ______     ______   __  __     __     ______
-          /\  == \   /\  __ \   /\__  _\ /\ \/ /    /\ \   /\__  _\
-          \ \  __<   \ \ \/\ \  \/_/\ \/ \ \  _"-.  \ \ \  \/_/\ \/
-           \ \_____\  \ \_____\    \ \_\  \ \_\ \_\  \ \_\    \ \_\
-            \/_____/   \/_____/     \/_/   \/_/\/_/   \/_/     \/_/
-
 
 This is a sample Slack bot built with Botkit.
 
@@ -22,10 +16,6 @@ This bot demonstrates many of the core features of Botkit:
   Create a new app via the Slack Developer site:
 
     -> http://api.slack.com
-
-  Get a Botkit Studio token from Botkit.ai:
-
-    -> https://studio.botkit.ai/
 
   Run your bot from the command line:
 
