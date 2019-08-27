@@ -3,8 +3,8 @@ dependencies:
   botkit: 0.7.4
   dashbot: 0.7.4
   debug: 2.6.9
+  dotenv: 7.0.0
   express: 4.16.3
-  node-env-file: 0.1.8
   querystring: 0.2.0
   request: 2.88.0
   wordfilter: 0.2.6
@@ -1268,6 +1268,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-ZyIm3HTI95mtNTB9+TaroRrNYBg=
+  /dotenv/7.0.0:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-M3NhsLbV1i6HuGzBUH8vXrtxOk+tWmzWKDMbAVSUp3Zsjm7ywFeuwrUXhmhQyRK1q5B5GGy7hcXPbj3bnfZg2g==
   /ecc-jsbn/0.1.2:
     dependencies:
       jsbn: 0.1.1
@@ -2482,12 +2488,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
-  /node-env-file/0.1.8:
-    dev: false
-    engines:
-      node: '>= 0.8.0'
-    resolution:
-      integrity: sha1-/Mt7BQ9zW1oz2p65N89vGrRX+2k=
   /node-fetch/2.6.0:
     dev: false
     engines:
@@ -3634,6 +3634,7 @@ packages:
     dev: false
     name: reconnect-core
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://github.com/dodo/reconnect-core/tarball/merged'
     version: 0.0.1
 registry: 'https://registry.npmjs.org/'
@@ -3644,8 +3645,8 @@ specifiers:
   botkit: 0.7.4
   dashbot: 0.7.4
   debug: ^2.3.3
+  dotenv: ^7.0.0
   express: ^4.14.0
-  node-env-file: ^0.1.8
   querystring: ^0.2.0
   request: ^2.79.0
   wordfilter: ^0.2.6

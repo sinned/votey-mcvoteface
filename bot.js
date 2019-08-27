@@ -1,11 +1,9 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is a simple Slack bot built with Botkit.
-
+This is a simple Slack bot built with Botkit and Dashbot.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-var env = require('node-env-file');
-env(__dirname + '/.env');
 
+// Load process.env values from .env file
+require('dotenv').config();
 
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
   console.log('Error: Specify clientId clientSecret and PORT in environment');
@@ -49,6 +47,7 @@ if (process.env.DASHBOT_API_KEY) {
   controller.log.info('No DASHBOT_API_KEY specified. For free turnkey analytics for your bot, go to https://www.dashbot.io/ to get your key.');
 }
 
+// Add all the skills in the /skills Directory
 var normalizedPath = require("path").join(__dirname, "skills");
 require("fs").readdirSync(normalizedPath).forEach(function(file) {
   require("./skills/" + file)(controller);
