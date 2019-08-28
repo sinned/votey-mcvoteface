@@ -12,7 +12,7 @@ if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
 
 var Botkit = require('botkit');
 var debug = require('debug')('botkit:main');
-var mongoStorage = require('botkit-storage-mongo')({mongoUri: process.env.MONGO_URI, tables: ['images','votes']});
+var mongoStorage = require('botkit-storage-mongo')({mongoUri: process.env.MONGODB_URI, tables: ['images','votes']});
 
 
 // Create the Botkit controller, which controls all instances of the bot.
