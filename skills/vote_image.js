@@ -21,26 +21,34 @@ module.exports = function(controller) {
   
   function getImages() {
     var images = [
-      'https://api.slack.com/img/blocks/bkb_template_images/goldengate.png',
-      'https://api.slack.com/img/blocks/bkb_template_images/beagle.png'
+      {
+        id: '1',
+        image_url: 'https://api.slack.com/img/blocks/bkb_template_images/goldengate.png'
+      },
+      {
+        id: '2',
+        image_url: 'https://api.slack.com/img/blocks/bkb_template_images/beagle.png'
+      }      
     ];
     return images;
   }
   
 
   function getVoteAttachments() {
+    var images = getImages();
+    var callback_id = `vote-${images[0].id}-${images[1].id}`;
     var attachments = [
           { 
             title: 'Image A',
-            image_url: 'https://api.slack.com/img/blocks/bkb_template_images/beagle.png'
+            image_url: images[0].image_url
           },
           {
             title: 'Image B',
-            image_url: 'https://api.slack.com/img/blocks/bkb_template_images/goldengate.png'
+            image_url: images[1].image_url
           }, 
           {
               title: 'Vote for an Image:',
-              callback_id: 'vote-123',
+              callback_id,
               attachment_type: 'default',
               actions: [
                   {
