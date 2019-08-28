@@ -1,6 +1,7 @@
 dependencies:
   body-parser: 1.18.3
   botkit: 0.7.4
+  botkit-storage-mongo: 1.0.7
   dashbot: 0.7.4
   debug: 2.6.9
   dotenv: 7.0.0
@@ -879,6 +880,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Gf51aNfvBuAxKSXQ+1SV/P1lzuRMyMyIqvjUUSqpjbtW6lFkPHhCmJIM0Dgxbflq78EXXisIYZQgAqsUNYeVQQ==
+  /botkit-storage-mongo/1.0.7:
+    dependencies:
+      monk: 6.0.6
+    dev: false
+    resolution:
+      integrity: sha1-uRMgydi31eCsnJ+ovGJOElWrNDY=
   /botkit-studio-sdk/1.0.9:
     dependencies:
       promise: 8.0.3
@@ -928,10 +935,20 @@ packages:
       '0': node
     resolution:
       integrity: sha1-ns5bWsqJopkyJC4Yv5M975h2zBc=
+  /bson/1.0.9:
+    dev: false
+    engines:
+      node: '>=0.6.19'
+    resolution:
+      integrity: sha512-IQX9/h7WdMBIW/q/++tGd+emQr0XMdeZ6icnT/74Xk9fnabWn+gZgpE+9V+gujL3hhJOoNrnDVY7tWdzc7NUTg==
   /buffer-equal-constant-time/1.0.1:
     dev: false
     resolution:
       integrity: sha1-+OcRMvf/5uAaXJaXpMbz5I1cyBk=
+  /buffer-shims/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-mXjOMXOIxkmth5MCjDR37wRKi1E=
   /bytes/3.0.0:
     dev: false
     engines:
@@ -1343,6 +1360,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-lu258v2wGZWCKyY92KratnSBgbw=
+  /es6-promise/3.2.1:
+    dev: false
+    resolution:
+      integrity: sha1-7FYjOGgDKQkgcXDDlEjiREndH8Q=
   /es6-promise/4.2.8:
     dev: false
     resolution:
@@ -2457,6 +2478,61 @@ packages:
     dev: false
     resolution:
       integrity: sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+  /mongodb-core/2.1.20:
+    dependencies:
+      bson: 1.0.9
+      require_optional: 1.0.1
+    dev: false
+    resolution:
+      integrity: sha512-IN57CX5/Q1bhDq6ShAR6gIv4koFsZP7L8WOK1S0lR0pVDQaScffSMV5jxubLsmZ7J+UdqmykKw4r9hG3XQEGgQ==
+  /mongodb/2.2.36:
+    dependencies:
+      es6-promise: 3.2.1
+      mongodb-core: 2.1.20
+      readable-stream: 2.2.7
+    dev: false
+    engines:
+      node: '>=0.10.3'
+    resolution:
+      integrity: sha512-P2SBLQ8Z0PVx71ngoXwo12+FiSfbNfGOClAao03/bant5DgLNkOPAck5IaJcEk4gKlQhDEURzfR3xuBG1/B+IA==
+  /monk-middleware-cast-ids/0.2.1:
+    dev: false
+    resolution:
+      integrity: sha1-QMQOWmyzPM7cKJIglDJ17ohhxSk=
+  /monk-middleware-fields/0.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-/2N6819ZSIecyyvhWpE2CRG+psE=
+  /monk-middleware-handle-callback/0.2.2:
+    dev: false
+    resolution:
+      integrity: sha512-5hBynb7asZ2uw9XVze7C3XH0zXT51yFDvYydk/5HnWWzh2NLglDSiKDcX0yLKPHzFgiq+5Z4Laq5fFVnFsmm8w==
+  /monk-middleware-options/0.2.1:
+    dev: false
+    resolution:
+      integrity: sha1-WNrhxRjUZjbr3/UG+t/Hc7tEKIY=
+  /monk-middleware-query/0.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-qSbGd9SlYgxiFRsKVtDAwVFnWHQ=
+  /monk-middleware-wait-for-connection/0.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-MSlY0w5Yi1fQl1TdfJe0hDMWg1o=
+  /monk/6.0.6:
+    dependencies:
+      debug: 2.6.9
+      mongodb: 2.2.36
+      monk-middleware-cast-ids: 0.2.1
+      monk-middleware-fields: 0.2.0
+      monk-middleware-handle-callback: 0.2.2
+      monk-middleware-options: 0.2.1
+      monk-middleware-query: 0.2.0
+      monk-middleware-wait-for-connection: 0.2.0
+      object-assign: 4.1.1
+    dev: false
+    resolution:
+      integrity: sha512-bSuADQGwIxBcRzCzQaMoGmiGl30Dr+0iB1FQAQb3VwWwAKbtpDN2wkVHCjthzw/jXhPHWxTQFUtlSt/nSagojQ==
   /ms/2.0.0:
     dev: false
     resolution:
@@ -2609,6 +2685,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==
+  /object-assign/4.1.1:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
   /object-keys/1.1.1:
     dev: false
     engines:
@@ -2933,6 +3015,18 @@ packages:
     dev: false
     resolution:
       integrity: sha1-j5A0HmilPMySh4jaz80Rs265t44=
+  /readable-stream/2.2.7:
+    dependencies:
+      buffer-shims: 1.0.0
+      core-util-is: 1.0.2
+      inherits: 2.0.4
+      isarray: 1.0.0
+      process-nextick-args: 1.0.7
+      string_decoder: 1.0.3
+      util-deprecate: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha1-BwV6y+JGeyIELTb5jFrVBwVOlbE=
   /reduce-flatten/1.0.1:
     dev: false
     engines:
@@ -3034,6 +3128,19 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l/cXtp1IeE9fUmpsWqj/3aBVpNE=
+  /require_optional/1.0.1:
+    dependencies:
+      resolve-from: 2.0.0
+      semver: 5.7.1
+    dev: false
+    resolution:
+      integrity: sha512-qhM/y57enGWHAe3v/NcwML6a3/vfESLe/sGM2dII+gEO0BpKRUkWZow/tyloNqJyN6kXSl3RyyM8Ll5D/sJP8g==
+  /resolve-from/2.0.0:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-lICrIOlP+h2egKgEx+oUdhGWa1c=
   /resolve/1.12.0:
     dependencies:
       path-parse: 1.0.6
@@ -3277,6 +3384,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-YuIDvEF2bGwoyfyEMB2rHFMQ+pQ=
+  /string_decoder/1.0.3:
+    dependencies:
+      safe-buffer: 5.1.2
+    dev: false
+    resolution:
+      integrity: sha512-4AH6Z5fzNNBcH+6XDMfA/BTt87skxqJlO0lAh3Dker5zThcAxG6mKz+iGu308UKoPPQ8Dcqx/4JhujzltRa+hQ==
   /stringstream/0.0.6:
     dev: false
     resolution:
@@ -3643,6 +3756,7 @@ shrinkwrapVersion: 3
 specifiers:
   body-parser: ^1.15.2
   botkit: 0.7.4
+  botkit-storage-mongo: ^1.0.7
   dashbot: 0.7.4
   debug: ^2.3.3
   dotenv: ^7.0.0

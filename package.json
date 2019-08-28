@@ -15,7 +15,8 @@
     "dotenv": "^7.0.0",
     "querystring": "^0.2.0",
     "request": "^2.79.0",
-    "wordfilter": "^0.2.6"
+    "wordfilter": "^0.2.6",
+    "botkit-storage-mongo": "^1.0.7"
   },
   "devDependencies": {},
   "author": "dennis@dashbot.io",

@@ -12,6 +12,8 @@ if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
 
 var Botkit = require('botkit');
 var debug = require('debug')('botkit:main');
+var mongoStorage = require('botkit-storage-mongo')({mongoUri: process.env.MONGO_URI, tables: ['images','votes']});
+
 
 // Create the Botkit controller, which controls all instances of the bot.
 var controller = Botkit.slackbot({
@@ -21,7 +23,8 @@ var controller = Botkit.slackbot({
     verificationToken: process.env.verificationToken,
     // debug: true,
     scopes: ['bot'],
-    json_file_store: __dirname + '/.db/' // store user data in a simple JSON format
+    storage: mongoStorage
+    //json_file_store: __dirname + '/.db/' // store user data in a simple JSON format
 });
 
 controller.startTicking();
