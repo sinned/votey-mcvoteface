@@ -15,29 +15,20 @@ module.exports = function(controller) {
   
   controller.hears('interactive', 'direct_message', function(bot, message) {
     bot.reply(message, {
-        attachments:[
-            {
-                title: 'Do you want to interact with my buttons?',
-                callback_id: '123',
-                attachment_type: 'default',
-                actions: [
-                    {
-                        "name":"yes",
-                        "text": "Yes",
-                        "value": "yes",
-                        "type": "button",
-                    },
-                    {
-                        "name":"no",
-                        "text": "No",
-                        "value": "no",
-                        "type": "button",
-                    }
-                ]
-            }
-        ]
+        attachments:getVoteAttachments()
     });
 });
+  // receive an interactive message, and reply with a message that will replace the original
+  controller.on('interactive_message_callback', function(bot, message) {
+    dashbot.logIncoming(bot.identity, bot.team_info, message);
+    var votedFor = message.actions[0].value;
+    // bot.replyInteractive(message, `You voted for ${votedFor}`);
+    bot.reply(message, {
+        attachments: getVoteAttachments()
+    });
+
+});
+  
   
   function getImages() {
     var images = [
@@ -108,5 +99,30 @@ module.exports = function(controller) {
     return content;
   }
 
+  function getVoteAttachments() {
+    var attachments = [
+            {
+                title: 'Vote for an Image:',
+                image_url: 'https://api.slack.com/img/blocks/bkb_template_images/goldengate.png',
+                callback_id: 'vote-123',
+                attachment_type: 'default',
+                actions: [
+                    {
+                        "name":"Image A",
+                        "text": "Image A",
+                        "value": "A",
+                        "type": "button",
+                    },
+                    {
+                        "name":"Image B",
+                        "text": "Image B",
+                        "value": "B",
+                        "type": "button",
+                    }
+                ]
+            }
+        ];
+    return attachments;
+  }
 
 };
