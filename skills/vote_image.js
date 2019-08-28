@@ -1,4 +1,6 @@
 module.exports = function(controller) {
+  
+  var dashbot = require('dashbot')(process.env.DASHBOT_API_KEY).slack;
 
   controller.hears(['vote'], 'direct_message,direct_mention', function(bot, message) {
     const content = {
@@ -59,36 +61,12 @@ module.exports = function(controller) {
     };
     bot.reply(message, content);
   });
-
-  controller.hears('interactive', 'direct_message', function(bot, message) {
-      bot.reply(message, {
-          attachments:[
-              {
-                  title: 'Do you want to interact with my buttons?',
-                  callback_id: '123',
-                  attachment_type: 'default',
-                  actions: [
-                      {
-                          "name":"yes",
-                          "text": "Yes",
-                          "value": "yes",
-                          "type": "button",
-                      },
-                      {
-                          "name":"no",
-                          "text": "No",
-                          "value": "no",
-                          "type": "button",
-                      }
-                  ]
-              }
-          ]
-      });
-  });  
   
   // receive an interactive message, and reply with a message that will replace the original
   controller.on('block_actions', function(bot, message) {
-    bot.reply(message, 'got a block action');
+    dashbot.logIncoming(bot.identity, bot.team_info, message);
+    bot.replyInteractive(message, 'Thanks for your vote!');
+    console.log('interactive message incoming', bot.identity, bot.team_info);
   });
 
 };
