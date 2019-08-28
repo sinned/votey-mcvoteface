@@ -1,8 +1,8 @@
 module.exports = function(controller) {
   
-  var dashbot = require('dashbot')(process.env.DASHBOT_API_KEY, {debug:true}).slack;
+  const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY, {debug:true}).slack;
 
-  controller.hears(['vote'], 'direct_message,direct_mention', function(bot, message) {   
+  controller.hears(['voteblock'], 'direct_message,direct_mention', function(bot, message) {   
     bot.reply(message, getVoteContent());
   });
   
@@ -13,11 +13,12 @@ module.exports = function(controller) {
     bot.reply(message, getVoteContent());
   });
   
-  controller.hears('interactive', 'direct_message', function(bot, message) {
+  controller.hears('vote', 'direct_message', function(bot, message) {
     bot.reply(message, {
         attachments:getVoteAttachments()
     });
-});
+  });
+  
   // receive an interactive message, and reply with a message that will replace the original
   controller.on('interactive_message_callback', function(bot, message) {
     dashbot.logIncoming(bot.identity, bot.team_info, message);
@@ -27,8 +28,7 @@ module.exports = function(controller) {
         attachments: getVoteAttachments()
     });
 
-});
-  
+  });
   
   function getImages() {
     var images = [

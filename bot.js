@@ -42,7 +42,7 @@ require(__dirname + '/components/onboarding.js')(controller);
 
 // Enable Dashbot.io plugin
 if (process.env.DASHBOT_API_KEY) {
-  var dashbot = require('dashbot')(process.env.DASHBOT_API_KEY).slack;
+  const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY).slack;
   controller.middleware.receive.use(dashbot.receive);
   controller.middleware.send.use(dashbot.send);
   controller.log.info('Thanks for using Dashbot. Visit https://www.dashbot.io/ to see your bot analytics in real time.');
