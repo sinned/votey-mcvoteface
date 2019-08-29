@@ -5,7 +5,7 @@ module.exports = async function(controller) {
   const ImagesModel = mongoose.model('Images');
   const _ = require('lodash');
   
-  controller.hears('vote', 'direct_message', async function(bot, message) {
+  controller.hears('vote', 'direct_message, direct_mention', async function(bot, message) {
     bot.reply(message, 'Getting data..');
     bot.reply(message, {
         attachments: await getVoteAttachments()
@@ -17,6 +17,7 @@ module.exports = async function(controller) {
     dashbot.logIncoming(bot.identity, bot.team_info, message);
     console.log('vote action', message);
     var userId = message.user;
+    var userName = _.get(message, 'raw_message.user.name');
     var teamId = message.team.id;
     var voteTimestamp = message.action_ts;
     var votedForName = _.get(_.first(message.actions), 'name');
@@ -27,7 +28,7 @@ module.exports = async function(controller) {
       console.log('votedImageUrl', votedImageUrl);
       bot.replyInteractive(message, {
         attachments: [{
-          title: `You voted for ${votedFor}`,
+          title: `${userName} voted for ${votedForName}`,
           thumb_url: votedImageUrl
         }]
       });
