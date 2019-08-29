@@ -12,23 +12,29 @@ module.exports = async function(controller) {
     });
   });
   
-  // receive an interactive message, and reply with a message that will replace the original
+  // when someone votes
   controller.on('interactive_message_callback', async function(bot, message) {
     dashbot.logIncoming(bot.identity, bot.team_info, message);
     console.log('vote action', message);
-    var votedFor = message.actions[0].value;
-    var voteId = message.callback_id;
-    var votedImageUrl = votedFor === 'A' ? message.original_message.attachments[0].image_url : message.original_message.attachments[1].image_url;
-    console.log('votedImageUrl', votedImageUrl);
-    bot.replyInteractive(message, {
-      attachments: [{
-        title: `You voted for ${votedFor}`,
-        thumb_url: votedImageUrl
-      }]
-    });
-    bot.reply(message, {
-        attachments: await getVoteAttachments()
-    });
+    var userId = message.user;
+    var teamId = message.team.id;
+    var voteTimestamp = message.action_ts;
+    var votedForName = _.get(_.first(message.actions), 'name');
+    var votedFor = _.get(_.first(message.actions), 'value');
+    if (votedFor) {
+      var voteId = message.callback_id;
+      var votedImageUrl = votedForName === 'Image A' ? message.original_message.attachments[0].image_url : message.original_message.attachments[1].image_url;
+      console.log('votedImageUrl', votedImageUrl);
+      bot.replyInteractive(message, {
+        attachments: [{
+          title: `You voted for ${votedFor}`,
+          thumb_url: votedImageUrl
+        }]
+      });
+      bot.reply(message, {
+          attachments: await getVoteAttachments()
+      });
+    }    
 
   });
   
@@ -38,7 +44,6 @@ module.exports = async function(controller) {
       // { $match: { experiment: 10 } },
       { $sample: { size: 2 } } 
     ]).exec();
-    console.log('images',images);
     return images;
   }
 
@@ -64,13 +69,13 @@ module.exports = async function(controller) {
                     {
                         "name":"Image A",
                         "text": "Image A",
-                        "value": "A",
+                        "value": images[0]._id,
                         "type": "button",
                     },
                     {
                         "name":"Image B",
                         "text": "Image B",
-                        "value": "B",
+                        "value": images[1]._id,
                         "type": "button",
                     }
                 ]

@@ -45,6 +45,9 @@ db.once('open', function() {
   // Set up an Express-powered webserver to expose oauth and webhook endpoints
   var webserver = require(__dirname + '/components/express_webserver.js')(controller);
 
+  // Add the api routes.
+  require('./api/routes')(webserver);
+
   // Set up a simple storage backend for keeping a record of customers
   // who sign up for the app via the oauth
   require(__dirname + '/components/user_registration.js')(controller);
