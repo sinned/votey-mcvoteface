@@ -15,7 +15,10 @@ module.exports = async function(controller) {
   // receive an interactive message, and reply with a message that will replace the original
   controller.on('interactive_message_callback', async function(bot, message) {
     dashbot.logIncoming(bot.identity, bot.team_info, message);
+    console.log('vote action', message);
     var votedFor = message.actions[0].value;
+    var voteId = message.callback_id;
+    var votedImageUrl = message.actions[0].value === 'A' ? message.original_message.attachments[0].image_url : message.original_message.attachments[1].image_url;
     bot.replyInteractive(message, `You voted for ${votedFor}`);
     bot.reply(message, {
         attachments: await getVoteAttachments()
@@ -26,7 +29,7 @@ module.exports = async function(controller) {
   async function getVoteImages() {
     // const images = await ImagesModel.find({}).exec();
     const images = await ImagesModel.aggregate([ 
-      { $match: { experiment: 10 } },
+      // { $match: { experiment: 10 } },
       { $sample: { size: 2 } } 
     ]).exec();
     return images;
@@ -35,36 +38,39 @@ module.exports = async function(controller) {
 
   async function getVoteAttachments() {
     var images = await getVoteImages();
-    var callback_id = `vote-${images[0]._id}-${images[1]._id}`;
-    var attachments = [
-          { 
-            title: 'Image A',
-            image_url: images[0].image_url
-          },
-          {
-            title: 'Image B',
-            image_url: images[1].image_url
-          }, 
-          {
-              title: 'Vote for an Image:',
-              callback_id,
-              attachment_type: 'default',
-              actions: [
-                  {
-                      "name":"Image A",
-                      "text": "Image A",
-                      "value": "A",
-                      "type": "button",
-                  },
-                  {
-                      "name":"Image B",
-                      "text": "Image B",
-                      "value": "B",
-                      "type": "button",
-                  }
-              ]
-          }
-        ];
+    var attachments;
+    if (images) {
+      var callback_id = images ? `vote-${images[0]._id}-${images[1]._id}` : 'no-id';
+      attachments = [
+            { 
+              title: 'Image A',
+              image_url: images[0].image_url
+            },
+            {
+              title: 'Image B',
+              image_url: images[1].image_url
+            }, 
+            {
+                title: 'Vote for an Image:',
+                callback_id,
+                attachment_type: 'default',
+                actions: [
+                    {
+                        "name":"Image A",
+                        "text": "Image A",
+                        "value": "A",
+                        "type": "button",
+                    },
+                    {
+                        "name":"Image B",
+                        "text": "Image B",
+                        "value": "B",
+                        "type": "button",
+                    }
+                ]
+            }
+          ];
+    }
     return attachments;
   }
 
