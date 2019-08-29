@@ -15,17 +15,20 @@ module.exports = async function(controller) {
   // when someone votes
   controller.on('interactive_message_callback', async function(bot, message) {
     dashbot.logIncoming(bot.identity, bot.team_info, message);
-    console.log('vote action', message);
     var userId = message.user;
     var userName = _.get(message, 'raw_message.user.name');
     var teamId = message.team.id;
     var voteTimestamp = message.action_ts;
     var votedForName = _.get(_.first(message.actions), 'name');
     var votedFor = _.get(_.first(message.actions), 'value');
+    var actions = _.get(message, 'original_message.attachments[2].actions');
+    // figure out votedAgainst
+    
+    console.log('actions', actions);
+    if (actions.value === votedFor)
     if (votedFor) {
       var voteId = message.callback_id;
       var votedImageUrl = votedForName === 'Image A' ? message.original_message.attachments[0].image_url : message.original_message.attachments[1].image_url;
-      console.log('votedImageUrl', votedImageUrl);
       bot.replyInteractive(message, {
         attachments: [{
           title: `${userName} voted for ${votedForName}`,
@@ -35,6 +38,15 @@ module.exports = async function(controller) {
       bot.reply(message, {
           attachments: await getVoteAttachments()
       });
+      var vote = {
+        userId,
+        userName,
+        teamId,
+        voteTimestamp,
+        votedForName,
+        votedFor,
+        
+      };
     }    
 
   });
