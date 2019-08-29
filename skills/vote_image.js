@@ -1,6 +1,6 @@
 module.exports = function(controller) {
   
-  const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY, {debug:true}).slack;
+  const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY, {debug:false}).slack;
   
   controller.hears('vote', 'direct_message', function(bot, message) {
     bot.reply(message, {
