@@ -2,44 +2,41 @@ module.exports = function(controller) {
   
   const mongoose = require('mongoose');
   const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY, {debug:false}).slack;
-  const Images = mongoose.model('Images');
-  console.log('images mondel', Images);
+  const ImagesModel = mongoose.model('Images');
   
-  controller.hears('vote', 'direct_message', function(bot, message) {
+  controller.hears('vote', 'direct_message', async function(bot, message) {
     bot.reply(message, {
-        attachments:getVoteAttachments()
+        attachments: await getVoteAttachments()
     });
   });
   
   // receive an interactive message, and reply with a message that will replace the original
-  controller.on('interactive_message_callback', function(bot, message) {
+  controller.on('interactive_message_callback', async function(bot, message) {
     dashbot.logIncoming(bot.identity, bot.team_info, message);
     var votedFor = message.actions[0].value;
-    // bot.replyInteractive(message, `You voted for ${votedFor}`);
+    bot.replyInteractive(message, `You voted for ${votedFor}`);
     bot.reply(message, {
-        attachments: getVoteAttachments()
+        attachments: await getVoteAttachments()
     });
 
   });
   
-  function getImages() {
-    var images = [
-      {
-        id: '1',
-        image_url: 'https://api.slack.com/img/blocks/bkb_template_images/goldengate.png'
-      },
-      {
-        id: '2',
-        image_url: 'https://api.slack.com/img/blocks/bkb_template_images/beagle.png'
-      }      
-    ];
+  async function getAllImages() {
+    const images = await ImagesModel.find({}).exec();
+    console.log('getAllImages', images);
+    return images;
+  }
+  
+  getVoteImages() {
+    
     return images;
   }
   
 
-  function getVoteAttachments() {
-    var images = getImages();
+  async function getVoteAttachments() {
+    var images = await getVoteImages();
     var callback_id = `vote-${images[0].id}-${images[1].id}`;
+    console.log('the image url is',images[0].image_url);
     var attachments = [
           { 
             title: 'Image A',
