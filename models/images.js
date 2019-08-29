@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const timestamps = require('mongoose-timestamp');
 const Schema = mongoose.Schema;
 
 const ImagesSchema = new Schema({
@@ -14,3 +13,4 @@ const ImagesSchema = new Schema({
 });
 
 mongoose.model('Images', ImagesSchema);
+console.log('Loading Images Model.');

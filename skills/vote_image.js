@@ -2,6 +2,8 @@ module.exports = function(controller) {
   
   const mongoose = require('mongoose');
   const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY, {debug:false}).slack;
+  const Images = mongoose.model('Images');
+  console.log('images mondel', Images);
   
   controller.hears('vote', 'direct_message', function(bot, message) {
     bot.reply(message, {
