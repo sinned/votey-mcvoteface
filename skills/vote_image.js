@@ -18,8 +18,14 @@ module.exports = async function(controller) {
     console.log('vote action', message);
     var votedFor = message.actions[0].value;
     var voteId = message.callback_id;
-    var votedImageUrl = message.actions[0].value === 'A' ? message.original_message.attachments[0].image_url : message.original_message.attachments[1].image_url;
-    bot.replyInteractive(message, `You voted for ${votedFor}`);
+    var votedImageUrl = votedFor === 'A' ? message.original_message.attachments[0].image_url : message.original_message.attachments[1].image_url;
+    console.log('votedImageUrl', votedImageUrl);
+    bot.replyInteractive(message, {
+      attachments: [{
+        title: `You voted for ${votedFor}`,
+        thumb_url: votedImageUrl
+      }]
+    });
     bot.reply(message, {
         attachments: await getVoteAttachments()
     });
@@ -34,7 +40,6 @@ module.exports = async function(controller) {
     ]).exec();
     return images;
   }
-  
 
   async function getVoteAttachments() {
     var images = await getVoteImages();
