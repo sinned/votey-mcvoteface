@@ -1,10 +1,12 @@
-module.exports = function(controller) {
+module.exports = async function(controller) {
   
   const mongoose = require('mongoose');
   const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY, {debug:false}).slack;
   const ImagesModel = mongoose.model('Images');
+  const _ = require('lodash');
   
   controller.hears('vote', 'direct_message', async function(bot, message) {
+    bot.reply(message, 'Getting data..');
     bot.reply(message, {
         attachments: await getVoteAttachments()
     });
@@ -21,22 +23,17 @@ module.exports = function(controller) {
 
   });
   
-  async function getAllImages() {
-    const images = await ImagesModel.find({}).exec();
-    console.log('getAllImages', images);
-    return images;
-  }
-  
-  getVoteImages() {
-    
+  async function getVoteImages() {
+    // const images = await ImagesModel.find({}).exec();
+    const images = await ImagesModel.aggregate([ { $sample: { size: 2 } } ]).exec();
     return images;
   }
   
 
   async function getVoteAttachments() {
     var images = await getVoteImages();
-    var callback_id = `vote-${images[0].id}-${images[1].id}`;
-    console.log('the image url is',images[0].image_url);
+    var callback_id = `vote-${images[0]._id}-${images[1]._id}`;
+    console.log('the image url is',images[0].image_url, images[1].image_url);
     var attachments = [
           { 
             title: 'Image A',
@@ -66,6 +63,7 @@ module.exports = function(controller) {
               ]
           }
         ];
+    console.log('attachments', attachments);
     return attachments;
   }
 
