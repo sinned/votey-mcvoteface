@@ -38,6 +38,7 @@ module.exports = async function(controller) {
       // { $match: { experiment: 10 } },
       { $sample: { size: 2 } } 
     ]).exec();
+    console.log('images',images);
     return images;
   }
 
