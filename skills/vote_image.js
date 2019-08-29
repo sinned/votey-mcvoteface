@@ -25,7 +25,10 @@ module.exports = async function(controller) {
   
   async function getVoteImages() {
     // const images = await ImagesModel.find({}).exec();
-    const images = await ImagesModel.aggregate([ { $sample: { size: 2 } } ]).exec();
+    const images = await ImagesModel.aggregate([ 
+      { $match: { experiment: 10 } },
+      { $sample: { size: 2 } } 
+    ]).exec();
     return images;
   }
   
@@ -33,7 +36,6 @@ module.exports = async function(controller) {
   async function getVoteAttachments() {
     var images = await getVoteImages();
     var callback_id = `vote-${images[0]._id}-${images[1]._id}`;
-    console.log('the image url is',images[0].image_url, images[1].image_url);
     var attachments = [
           { 
             title: 'Image A',
@@ -63,7 +65,6 @@ module.exports = async function(controller) {
               ]
           }
         ];
-    console.log('attachments', attachments);
     return attachments;
   }
 
