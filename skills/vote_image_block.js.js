@@ -2,14 +2,16 @@ module.exports = function(controller) {
   
   const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY, {debug:true}).slack;
   
-   controller.hears(['blockbkicj'], 'direct_message,direct_mention', function(bot, message) {   
-    bot.reply(message, getVoteContent());
+   controller.hears(['blockblock'], 'direct_message,direct_mention', function(bot, message) {   
+     console.log('blockblock');
+     bot.reply(message, getVoteContent());
   });
   
   // receive an interactive message, and reply with a message that will replace the original
   controller.on('block_actions', function(bot, message) {
     dashbot.logIncoming(bot.identity, bot.team_info, message);
-    bot.replyInteractive(message, 'Thanks for your vote!');
+    var votedFor = message.actions[0].value;
+    bot.replyInteractive(message, `You voted for ${votedFor}`);
     bot.reply(message, getVoteContent());
   });
   
@@ -38,7 +40,7 @@ module.exports = function(controller) {
            "text": "Image A",
            "emoji": true
          },
-         "image_url": images[0],
+         "image_url": images[0].image_url,
          "alt_text": "Image A"
        },
        {
@@ -48,7 +50,7 @@ module.exports = function(controller) {
            "text": "Image B",
            "emoji": true
          },
-         "image_url": images[1],
+         "image_url": images[1].image_url,
          "alt_text": "Image B"
        },
        {
@@ -69,7 +71,7 @@ module.exports = function(controller) {
                "text": "Image A"
              },
              "style": "primary",
-             "value": "click_me_123"
+             "value": "A"
            },
            {
              "type": "button",
@@ -79,7 +81,7 @@ module.exports = function(controller) {
                "text": "Image B"
              },
              "style": "primary",
-             "value": "click_me_123"
+             "value": "B"
            }
          ]
        }
