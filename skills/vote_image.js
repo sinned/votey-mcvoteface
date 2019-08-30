@@ -2,7 +2,8 @@ module.exports = async function(controller) {
   
   const mongoose = require('mongoose');
   const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY, {debug:false}).slack;
-  const ImagesModel = mongoose.model('Images');
+  const Images = mongoose.model('Images');
+  const VoteLogs = mongoose.model('VoteLogs');
   const _ = require('lodash');
   
   controller.hears('vote', 'direct_message, direct_mention', async function(bot, message) {
@@ -53,22 +54,23 @@ module.exports = async function(controller) {
         votedAgainst
       };
       console.log('vote is', vote);
-      const imageToUpdate = await ImagesModel.findOne({_id: votedFor});
+      const imageToUpdate = await Images.findOne({_id: votedFor});
       imageToUpdate.votes = imageToUpdate.votes ? imageToUpdate.votes + 1 : 1;
       await imageToUpdate.save();
       console.log('imageToUpdate', imageToUpdate);
-      
+      const newVoteLog = new VoteLogs(vote);
+      newVoteLog.save();      
     }    
 
   });
   
   async function getVoteImages() {
-    // const images = await ImagesModel.find({}).exec();
-    const images = await ImagesModel.aggregate([ 
+    // const images = await Images.find({}).exec();
+    const voteimages = await Images.aggregate([ 
       // { $match: { experiment: 10 } },
       { $sample: { size: 2 } } 
     ]).exec();
-    return images;
+    return voteimages;
   }
 
   async function getVoteAttachments() {
