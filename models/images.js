@@ -10,9 +10,12 @@ const ImagesSchema = new Schema({
   image_url: {
     type: String
   },
+  experiment: {
+    type: String
+  },
   votes: {
     type: Number
-  }
+  },
 });
 
 mongoose.model('Images', ImagesSchema);

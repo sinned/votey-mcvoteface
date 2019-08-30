@@ -10,22 +10,37 @@ class LoadFromPinterest {
     console.log('LOADING PINTEREST FROM API');
     const pinterestRssUrl = 'https://www.pinterest.com/choijoy/home-inspiration.rss';
     let feed = await parser.parseURL(pinterestRssUrl);
- 
+    let feedTitle = feed.title;
     feed.items.forEach(item => {
-      let description = item.content;
-      if (description) {
+      let content = item.content;
+      if (content) {
+        
         let regex = /(<img[^>]+src=")([^">]+)"/;
-        var foundImgSrc = description.match(regex);     
-        console.log('foundImgSrc', foundImgSrc[2]);  
-        if (foundImgSrc[2]) {
-          var newImage = new Images(
-            {
-              experiment: feed.title,
-              image_url: foundImgSrc[2],
+        var foundImgMatches = content.match(regex);  
+        var imgsrc = foundImgMatches[2];
+        if (imgsrc) {
+          console.log('loading', imgsrc);
+          var imageJson = {
+              experiment: feedTitle,
+              image_url: imgsrc,
               name: item.title
+            };
+
+          Images.find(imageJson, (err, docs) => {
+            console.log('docs', docs);
+            if docs.length === 0 {
+                var newImage = new Images(
+                {
+                  experiment: feedTitle,
+                  image_url: imgsrc,
+                  name: item.title
+                }
+                newImage.save();
+            } else {
+              console.log(' -- already have this image');
             }
           );
-          newImage.save();
+          });
         }
       }
     });
