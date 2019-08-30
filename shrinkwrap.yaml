@@ -13,6 +13,7 @@ dependencies:
   q: 2.0.3
   querystring: 0.2.0
   request: 2.88.0
+  rss-parser: 3.7.2
   wordfilter: 0.2.6
 packages:
   /@types/async/2.4.2:
@@ -1340,6 +1341,10 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
+  /entities/1.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
   /envify/4.1.0:
     dependencies:
       esprima: 4.0.1
@@ -3268,6 +3273,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-NipCxtMEBW1JOz8SvOq7LGV2ptQ=
+  /rss-parser/3.7.2:
+    dependencies:
+      entities: 1.1.2
+      xml2js: 0.4.19
+    dev: false
+    resolution:
+      integrity: sha512-kx0VIFelgwBk5qA4n32U6cx40anAU7TwlRXjyxLDFgMlg8/UcJ64x+Hj5oRX1Kjos+OeFGOmnd5YXH5ES+bmzg==
   /rtcpeerconnection-shim/1.2.15:
     dependencies:
       sdp: 2.10.0
@@ -3302,6 +3314,10 @@ packages:
     optional: true
     resolution:
       integrity: sha512-/MY/PEMbk2SuY5sScONwhUDsV2p77Znkb/q3nSVstq/yQzYJOH/Azh29p9oJLsl3LnQwSvZDKagDGBsBwSooag==
+  /sax/1.2.4:
+    dev: false
+    resolution:
+      integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
   /scmp/2.0.0:
     dev: false
     resolution:
@@ -3821,12 +3837,25 @@ packages:
     dev: false
     resolution:
       integrity: sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
+  /xml2js/0.4.19:
+    dependencies:
+      sax: 1.2.4
+      xmlbuilder: 9.0.7
+    dev: false
+    resolution:
+      integrity: sha512-esZnJZJOiJR9wWKMyuvSE1y6Dq5LCuJanqhxslH2bxM6duahNZ+HMpCLhBQGZkbX6xRf8x1Y2eJlgt2q3qo49Q==
   /xmlbuilder/9.0.1:
     dev: false
     engines:
       node: '>=4.0'
     resolution:
       integrity: sha1-kc1wiXdVNj66V8Et3uq0o0GmH2U=
+  /xmlbuilder/9.0.7:
+    dev: false
+    engines:
+      node: '>=4.0'
+    resolution:
+      integrity: sha1-Ey7mPS7FVlxVfiD0wi35rKaGsQ0=
   /xtend/4.0.1:
     dev: false
     engines:
@@ -3902,4 +3931,5 @@ specifiers:
   q: ^2.0.3
   querystring: ^0.2.0
   request: ^2.79.0
+  rss-parser: ^3.7.2
   wordfilter: ^0.2.6
