@@ -44,6 +44,11 @@ module.exports = async function(controller) {
       bot.reply(message, {
           attachments: await getVoteAttachments()
       });
+
+      
+      const imageToUpdate = await Images.findOne({_id: votedFor});
+      imageToUpdate.votes = imageToUpdate.votes ? imageToUpdate.votes + 1 : 1;
+      await imageToUpdate.save();
       var vote = {
         userId,
         userName,
@@ -53,13 +58,8 @@ module.exports = async function(controller) {
         votedFor,
         votedAgainst
       };
-      console.log('vote is', vote);
-      const imageToUpdate = await Images.findOne({_id: votedFor});
-      imageToUpdate.votes = imageToUpdate.votes ? imageToUpdate.votes + 1 : 1;
-      await imageToUpdate.save();
-      console.log('imageToUpdate', imageToUpdate);
       const newVoteLog = new VoteLogs(vote);
-      newVoteLog.save();      
+      await newVoteLog.save();      
     }    
 
   });
