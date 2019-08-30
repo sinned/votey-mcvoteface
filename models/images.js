@@ -9,6 +9,9 @@ const ImagesSchema = new Schema({
   },
   image_url: {
     type: String
+  },
+  votes: {
+    type: Number
   }
 });
 

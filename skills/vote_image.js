@@ -22,10 +22,15 @@ module.exports = async function(controller) {
     var votedForName = _.get(_.first(message.actions), 'name');
     var votedFor = _.get(_.first(message.actions), 'value');
     var actions = _.get(message, 'original_message.attachments[2].actions');
-    // figure out votedAgainst
     
-    console.log('actions', actions);
-    if (actions.value === votedFor)
+    // figure out votedAgains. some lazy assumptions being made here.
+    var votedAgainst;
+    if (actions[0].value === votedFor) {
+      votedAgainst = actions[1].value;
+    } else {
+      votedAgainst = actions[0].value;
+    }
+    
     if (votedFor) {
       var voteId = message.callback_id;
       var votedImageUrl = votedForName === 'Image A' ? message.original_message.attachments[0].image_url : message.original_message.attachments[1].image_url;
@@ -45,8 +50,14 @@ module.exports = async function(controller) {
         voteTimestamp,
         votedForName,
         votedFor,
-        
+        votedAgainst
       };
+      console.log('vote is', vote);
+      const imageToUpdate = await ImagesModel.findOne({_id: votedFor});
+      imageToUpdate.votes = imageToUpdate.votes ? imageToUpdate.votes + 1 : 1;
+      await imageToUpdate.save();
+      console.log('imageToUpdate', imageToUpdate);
+      
     }    
 
   });
