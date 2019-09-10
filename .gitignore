@@ -1,3 +1,6 @@
 .db
 node_modules
 components/routes/_*
+.env
+.config/*
+.node-gyp

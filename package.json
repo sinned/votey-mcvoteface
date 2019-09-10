@@ -1,7 +1,7 @@
 {
-  "name": "dashbot-botkit-starter-slack",
+  "name": "votey-mcvoteface",
   "version": "0.0.2",
-  "description": "A starter kit for building a custom Slack bot with Botkit Studio",
+  "description": "A Slackbot that Votes for stuff.",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
@@ -25,6 +25,6 @@
     "rss-parser": "^3.7.2"
   },
   "devDependencies": {},
-  "author": "dennis@dashbot.io",
+  "author": "sinned@gmail.com",
   "license": "ISC"
 }
