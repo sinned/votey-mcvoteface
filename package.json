@@ -26,5 +26,8 @@
   },
   "devDependencies": {},
   "author": "sinned@gmail.com",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "10.x"
+  }
 }
