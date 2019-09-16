@@ -61,7 +61,10 @@ module.exports = function(controller) {
     }
   );
 
-  controller.hears("help", "direct_message", function(bot, message) {
+  controller.hears(["help", "^hi", "^hi (.*)"], "direct_message", function(
+    bot,
+    message
+  ) {
     bot.reply(
       message,
       "I am VoteyMcVoteFace. To vote on the current poll, just DM me `vote`."
