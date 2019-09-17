@@ -1,6 +1,6 @@
 {
   "name": "votey-mcvoteface",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A Slackbot that Votes for stuff.",
   "main": "bot.js",
   "scripts": {
