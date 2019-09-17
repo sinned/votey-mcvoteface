@@ -11,7 +11,9 @@ module.exports = function(controller) {
       if (err) {
         console.log(err);
       } else {
-        convo.say("Hi! I am VoteyMcVoteFace.");
+        convo.say(
+          "Hi! I am Votey McVoteface. Thanks for adding me to your Slack."
+        );
         convo.say("DM me with `vote` to vote on the current poll.");
       }
     });

@@ -67,7 +67,7 @@ module.exports = function(controller) {
   ) {
     bot.reply(
       message,
-      "I am VoteyMcVoteFace. To vote on the current poll, just DM me `vote`."
+      "Hi. I am Votey McVoteface. To vote on the current poll, just DM me `vote`."
     );
   });
 
