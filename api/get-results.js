@@ -7,12 +7,12 @@ const Images = mongoose.model("Images");
 
 class GetResults {
   async get(req) {
-    const results = {
-      foo: 123
-    };
+    const voteImages = await Images.find()
+      .sort({ votes: -1 })
+      .exec();
 
     return {
-      results
+      voteImages
     };
   }
 }

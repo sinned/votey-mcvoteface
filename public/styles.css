@@ -4,7 +4,8 @@ body {
   margin: 0;
   height: 100%;
   font-family: "Merriweather", serif;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: normal;
   background-color: #00000;
   background: url("universe.jpg");
   background-size: cover;
@@ -32,4 +33,7 @@ body {
 .footer {
   background-color: #f5f5f5;
   font-size: 14px;
+}
+.results {
+  background: #ffffff;
 }

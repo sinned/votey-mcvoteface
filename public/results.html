@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Results: Votey McVoteface</title>
+        <link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+        <link rel="stylesheet" href="/styles.css" />
+        <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="results.js"></script>
+    </head>
+    <body class="d-flex flex-column h-100">
+        <div class="container results">
+          <div class="row">
+            <div class="col">
+            <h2 class="display-5">Results</h2>
+            <table class="table table-striped" summary="Vote Images Results">
+              <thead>
+                <tr>
+                  <th>Num</th>
+                  <th>Name</th>
+                  <th>Image</th>
+                  <th>Votes</th>
+                </tr>
+              </thead>
+              <tbody id="imagesDataTable">
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+        <div class="footer mt-auto py-3">
+          <div class="container">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link disabled" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="privacy.html">Privacy</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="support.html">Support</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </body>
+</html>
