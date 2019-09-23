@@ -13,10 +13,8 @@ module.exports = async function(controller) {
     async function(bot, message) {
       bot.reply(message, "Getting Scoreboard..");
       var images = await getImagesByVotes();
-      console.log(images);
       images = _.slice(images, 0, 3);
       var attachments = _.map(images, (image, i) => {
-        console.log("the image is" + image.image_url);
         let counter = i + 1;
         let placeText = counter;
         switch (counter) {
@@ -42,15 +40,15 @@ module.exports = async function(controller) {
     }
   );
 
-  controller.hears("winner", "direct_message, direct_mention", async function(
+  controller.hears("leader", "direct_message, direct_mention", async function(
     bot,
     message
   ) {
-    bot.reply(message, "Getting Current Winner..");
+    bot.reply(message, "Getting Current Leader..");
     var images = await getImagesByVotes();
     var winnerImage = _.first(images);
     bot.reply(message, {
-      text: "The Current Winner is...",
+      text: "The Current Leader is...",
       attachments: [
         {
           title: ":first_place_medal: " + winnerImage.name,

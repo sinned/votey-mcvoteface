@@ -83,7 +83,6 @@ module.exports = async function(controller) {
   async function getVoteAttachments() {
     var images = await getVoteImages();
     var attachments;
-    console.log("images", images);
     if (images.length > 0) {
       var callback_id = images
         ? `vote-${images[0]._id}-${images[1]._id}`
