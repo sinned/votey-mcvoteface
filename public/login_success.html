@@ -2,11 +2,11 @@
 <html>
     <head>
         <title>Success: Votey McVoteface</title>
+        <link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
         <link rel="stylesheet" href="/styles.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
         <script>
-
             function getCookie(name) {
               var value = "; " + document.cookie;
               var parts = value.split("; " + name + "=");
@@ -34,11 +34,31 @@
 
 
     </head>
-    <body>
-        <div class="wrapper">
-            <div>
-                <h1>Success! <a href="slack://open" id="slack_link">Your new bot is waiting!</a></h1>
+    <body class="d-flex flex-column h-100">
+      <div class="container">
+        <div class="jumbotron">
+          <div class="row">
+            <div class="col">
+                <h1>Success! <br />
+                  <a href="slack://open" id="slack_link">VoteyMcVoteface installed successfully!</a></h1>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="footer mt-auto py-3">
+        <div class="container">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="privacy.html">Privacy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="support.html">Support</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </body>
 </html>

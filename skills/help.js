@@ -15,7 +15,8 @@ module.exports = function(controller) {
   /* Collect some very simple runtime stats for use in the uptime/debug command */
   var stats = {
     triggers: 0,
-    convos: 0
+    convos: 0,
+    votes: 0
   };
 
   controller.on("heard_trigger", function() {
@@ -24,6 +25,10 @@ module.exports = function(controller) {
 
   controller.on("conversationStarted", function() {
     stats.convos++;
+  });
+
+  controller.on("interactive_message_callback", function() {
+    stats.votes++;
   });
 
   controller.hears(
@@ -35,9 +40,10 @@ module.exports = function(controller) {
           convo.setVar("uptime", formatUptime(process.uptime()));
           convo.setVar("convos", stats.convos);
           convo.setVar("triggers", stats.triggers);
+          convo.setVar("votes", stats.votes);
 
           convo.say(
-            "My main process has been online for {{vars.uptime}}. Since booting, I have heard {{vars.triggers}} triggers, and conducted {{vars.convos}} conversations."
+            "My main process has been online for {{vars.uptime}}. Since booting, I have heard {{vars.triggers}} triggers, conducted {{vars.convos}} conversations and received {{vars.votes}} votes."
           );
           convo.activate();
         }
@@ -67,7 +73,7 @@ module.exports = function(controller) {
   ) {
     bot.reply(
       message,
-      "Hi. I am Votey McVoteface. To vote on the current poll, just DM me `vote`."
+      "Aloha! I am Votey McVoteface. To vote on the current poll, just DM me `vote`."
     );
   });
 
