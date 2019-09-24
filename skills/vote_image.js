@@ -31,7 +31,8 @@ module.exports = async function(controller) {
     var votedForName = _.get(_.first(message.actions), "name");
     var votedFor = _.get(_.first(message.actions), "value");
     var actions = _.get(message, "original_message.attachments[2].actions");
-    console.log("votedFor", votedFor);
+    var triggerId = _.get(message, "trigger_id");
+    console.log("votedFor", votedFor, triggerId);
 
     // figure out votedAgains. some lazy assumptions being made here.
     var votedAgainst;
@@ -65,7 +66,8 @@ module.exports = async function(controller) {
         voteTimestamp,
         votedForName,
         votedFor,
-        votedAgainst
+        votedAgainst,
+        triggerId
       };
       const newVoteLog = new VoteLogs(vote);
       await newVoteLog.save();

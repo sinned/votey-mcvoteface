@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const VoteLogSchema = new Schema({
@@ -26,8 +26,11 @@ const VoteLogSchema = new Schema({
   votedAgainst: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Images"
+  },
+  triggerId: {
+    type: String
   }
 });
 
-mongoose.model('VoteLogs', VoteLogSchema);
-console.log('Loading VoteLogs Model.');
+mongoose.model("VoteLogs", VoteLogSchema);
+console.log("Loading VoteLogs Model.");

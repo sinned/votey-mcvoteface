@@ -25,13 +25,16 @@ module.exports = function(controller) {
     var userId = message.user;
     var userName = _.get(message, "raw_message.user.name");
     var teamId = message.team.id;
-    var voteTimestamp = message.action_ts;
+    var voteTimestamp = _.get(_.first(message.actions), "action_ts");
     var votedFor = _.get(_.first(message.actions), "value");
     var votedForText = _.get(_.first(message.actions), "text.text");
     var votedForName = votedForText;
     var blocks = _.get(message, "message.blocks");
     var actions = _.get(_.last(blocks), "elements");
-    console.log("votedFor (Block)", votedFor);
+    var triggerId = _.get(message, "trigger_id");
+
+    console.log("votedFor (Block)", votedFor, triggerId);
+
     // figure out votedAgains. some lazy assumptions being made here.
     var votedAgainst;
     if (_.first(actions).value === votedFor) {
@@ -64,7 +67,8 @@ module.exports = function(controller) {
         voteTimestamp,
         votedForName,
         votedFor,
-        votedAgainst
+        votedAgainst,
+        triggerId
       };
       const newVoteLog = new VoteLogs(vote);
       await newVoteLog.save();
