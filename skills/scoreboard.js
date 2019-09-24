@@ -9,8 +9,9 @@ module.exports = async function(controller) {
     "direct_message, direct_mention",
     async function(bot, message) {
       bot.reply(message, "Getting Scoreboard..");
-      var images = await getImagesByVotes();
-      images = _.slice(images, 0, 5);
+      var images = await getImagesByVotes(5);
+      // we can only show 50 at a time.
+      images = _.slice(images, 0, 50);
       var winners = _.map(images, (image, i) => {
         let counter = i + 1;
         let placeText = counter;
@@ -65,7 +66,7 @@ module.exports = async function(controller) {
     message
   ) {
     bot.reply(message, "Getting Current Leader..");
-    var images = await getImagesByVotes();
+    var images = await getImagesByVotes(1);
     var winnerImage = _.first(images);
     bot.reply(message, {
       text: "The Current Leader is...",
@@ -78,10 +79,11 @@ module.exports = async function(controller) {
     });
   });
 
-  async function getImagesByVotes() {
+  async function getImagesByVotes(limit = 50) {
     // const images = await Images.find({}).exec();
     const voteimages = await Images.find()
       .sort({ votes: -1 })
+      .limit(limit)
       .exec();
     return voteimages;
   }
