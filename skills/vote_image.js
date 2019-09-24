@@ -9,10 +9,7 @@ module.exports = async function(controller) {
   const VoteLogs = mongoose.model("VoteLogs");
   const _ = require("lodash");
 
-  controller.hears("vote", "direct_message, direct_mention", async function(
-    bot,
-    message
-  ) {
+  controller.hears("vote", "direct_message", async function(bot, message) {
     bot.reply(message, "Getting images..");
     bot.reply(message, {
       attachments: await getVoteAttachments()

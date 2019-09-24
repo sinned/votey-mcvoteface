@@ -9,13 +9,12 @@ module.exports = function(controller) {
   const VoteLogs = mongoose.model("VoteLogs");
   const _ = require("lodash");
 
-  controller.hears(
-    ["^blockblock"],
-    "direct_message,direct_mention",
-    async function(bot, message) {
-      bot.reply(message, await getVoteContent());
-    }
-  );
+  controller.hears(["^blockblock"], "direct_message", async function(
+    bot,
+    message
+  ) {
+    bot.reply(message, await getVoteContent());
+  });
 
   // receive an interactive message, and reply with a message that will replace the original
   controller.on("block_actions", async function(bot, message) {
