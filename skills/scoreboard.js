@@ -1,20 +1,17 @@
 module.exports = async function(controller) {
   const mongoose = require("mongoose");
-  const dashbot = require("dashbot")(process.env.DASHBOT_API_KEY, {
-    debug: false
-  }).slack;
   const Images = mongoose.model("Images");
   const VoteLogs = mongoose.model("VoteLogs");
   const _ = require("lodash");
 
   controller.hears(
-    "scoreboard",
+    ["scoreboard", "^top"],
     "direct_message, direct_mention",
     async function(bot, message) {
       bot.reply(message, "Getting Scoreboard..");
       var images = await getImagesByVotes();
-      images = _.slice(images, 0, 3);
-      var attachments = _.map(images, (image, i) => {
+      images = _.slice(images, 0, 5);
+      var winners = _.map(images, (image, i) => {
         let counter = i + 1;
         let placeText = counter;
         switch (counter) {
@@ -27,16 +24,39 @@ module.exports = async function(controller) {
           case 3:
             placeText = ":third_place_medal:";
             break;
+          default:
+            placeText = placeText + "";
         }
         return {
-          title: placeText + ": " + image.name,
-          thumb_url: image.image_url
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: placeText + ": *" + image.name + "*"
+          },
+          accessory: {
+            type: "image",
+            image_url: image.image_url,
+            alt_text: image.name
+          }
         };
       });
-      bot.reply(message, {
-        text: "Scoreboard",
-        attachments
-      });
+      var blocks = _.concat(
+        [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: "*Latest Scoreboard*"
+            }
+          },
+          { type: "divider" }
+        ],
+        winners
+      );
+      var blockMessage = {
+        blocks: blocks
+      };
+      bot.reply(message, blockMessage);
     }
   );
 

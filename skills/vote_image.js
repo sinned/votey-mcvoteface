@@ -1,8 +1,10 @@
 module.exports = async function(controller) {
   const mongoose = require("mongoose");
-  const dashbot = require("dashbot")(process.env.DASHBOT_API_KEY, {
-    debug: false
-  }).slack;
+  const dashbot = process.env.DASHBOT_API_KEY
+    ? require("dashbot")(process.env.DASHBOT_API_KEY, {
+        debug: false
+      }).slack
+    : false;
   const Images = mongoose.model("Images");
   const VoteLogs = mongoose.model("VoteLogs");
   const _ = require("lodash");
@@ -19,7 +21,9 @@ module.exports = async function(controller) {
 
   // when someone votes
   controller.on("interactive_message_callback", async function(bot, message) {
-    dashbot.logIncoming(bot.identity, bot.team_info, message);
+    if (dashbot) {
+      dashbot.logIncoming(bot.identity, bot.team_info, message);
+    }
     var userId = message.user;
     var userName = _.get(message, "raw_message.user.name");
     var teamId = message.team.id;
@@ -27,6 +31,7 @@ module.exports = async function(controller) {
     var votedForName = _.get(_.first(message.actions), "name");
     var votedFor = _.get(_.first(message.actions), "value");
     var actions = _.get(message, "original_message.attachments[2].actions");
+    console.log("votedFor", votedFor);
 
     // figure out votedAgains. some lazy assumptions being made here.
     var votedAgainst;
@@ -50,10 +55,6 @@ module.exports = async function(controller) {
           }
         ]
       });
-      bot.reply(message, {
-        attachments: await getVoteAttachments()
-      });
-
       const imageToUpdate = await Images.findOne({ _id: votedFor });
       imageToUpdate.votes = imageToUpdate.votes ? imageToUpdate.votes + 1 : 1;
       await imageToUpdate.save();
@@ -68,6 +69,9 @@ module.exports = async function(controller) {
       };
       const newVoteLog = new VoteLogs(vote);
       await newVoteLog.save();
+      bot.reply(message, {
+        attachments: await getVoteAttachments()
+      });
     }
   });
 
@@ -90,11 +94,13 @@ module.exports = async function(controller) {
       attachments = [
         {
           title: "Image A",
-          image_url: images[0].image_url
+          image_url: images[0].image_url,
+          footer: images[0].name
         },
         {
           title: "Image B",
-          image_url: images[1].image_url
+          image_url: images[1].image_url,
+          footer: images[1].name
         },
         {
           title: "Vote for an Image:",

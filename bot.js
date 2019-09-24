@@ -68,7 +68,7 @@ db.once("open", function() {
   // Enable Dashbot.io plugin
   if (process.env.DASHBOT_API_KEY) {
     const dashbot = require("dashbot")(process.env.DASHBOT_API_KEY, {
-      debug: true
+      debug: false
     }).slack;
     controller.middleware.receive.use(dashbot.receive);
     controller.middleware.send.use(dashbot.send);
