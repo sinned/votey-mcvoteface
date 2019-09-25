@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = async function(controller) {
   const mongoose = require("mongoose");
   const dashbot = process.env.DASHBOT_API_KEY
@@ -9,12 +11,13 @@ module.exports = async function(controller) {
   const VoteLogs = mongoose.model("VoteLogs");
   const _ = require("lodash");
 
-  controller.hears("^reloadimages", "direct_message", async function(
-    bot,
-    message
-  ) {
-    bot.reply(message, "Loading new images..");
-  });
+  controller.hears(
+    ["^reloadimages", "^reload images"],
+    "direct_message",
+    async function(bot, message) {
+      bot.reply(message, "Loading new images..");
+    }
+  );
 
   controller.hears("^vote", "direct_message", async function(bot, message) {
     bot.reply(message, "Getting images..");
@@ -89,11 +92,11 @@ module.exports = async function(controller) {
   });
 
   async function getVoteImages() {
-    console.log("getVoteImages");
     // const images = await Images.find({}).exec();
     let voteimages = await Images.find().exec();
     voteimages = _.shuffle(voteimages);
     voteimages = voteimages.slice(0, 2);
+    console.log("getVoteImages", voteimages);
     return voteimages;
   }
 
