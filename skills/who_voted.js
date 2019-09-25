@@ -38,7 +38,7 @@ module.exports = async function(controller) {
         });
         voteCountMessages.unshift("Total Votes: *" + totalVotes + "*\n");
         var votedMessage = _.join(voteCountMessages, "\n");
-        console.log("votedMessage", votedMessage);
+        //console.log("votedMessage", votedMessage);
         bot.reply(message, votedMessage);
       } else {
         bot.reply(message, "Sorry. I can't get your vote counts right now.");
