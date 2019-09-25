@@ -9,10 +9,24 @@ module.exports = async function(controller) {
   const VoteLogs = mongoose.model("VoteLogs");
   const _ = require("lodash");
 
-  controller.hears("vote", "direct_message", async function(bot, message) {
+  controller.hears("^reloadimages", "direct_message", async function(
+    bot,
+    message
+  ) {
+    bot.reply(message, "Loading new images..");
+  });
+
+  controller.hears("^vote", "direct_message", async function(bot, message) {
     bot.reply(message, "Getting images..");
     bot.reply(message, {
       attachments: await getVoteAttachments()
+    });
+  });
+
+  controller.hears("^sample", "direct_message", async function(bot, message) {
+    bot.reply(message, "Getting images...");
+    bot.reply(message, {
+      attachments: await getVoteAttachments(2)
     });
   });
 
@@ -75,6 +89,16 @@ module.exports = async function(controller) {
   });
 
   async function getVoteImages() {
+    console.log("getVoteImages");
+    // const images = await Images.find({}).exec();
+    let voteimages = await Images.find().exec();
+    voteimages = _.shuffle(voteimages);
+    voteimages = voteimages.slice(0, 2);
+    return voteimages;
+  }
+
+  async function getVoteImagesBySample() {
+    console.log("getVoteImagesBySample");
     // const images = await Images.find({}).exec();
     const voteimages = await Images.aggregate([
       // { $match: { experiment: 10 } },
@@ -83,8 +107,13 @@ module.exports = async function(controller) {
     return voteimages;
   }
 
-  async function getVoteAttachments() {
-    var images = await getVoteImages();
+  async function getVoteAttachments(sample = false) {
+    if (sample) {
+      var images = await getVoteImagesBySample();
+    } else {
+      var images = await getVoteImages();
+    }
+
     var attachments;
     if (images.length > 0) {
       var callback_id = images
