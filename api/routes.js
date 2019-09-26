@@ -9,6 +9,7 @@ module.exports = app => {
   const getResultsForImage = new PromiseHandler(
     require("./get-results-for-image")
   );
+  const getVoteLogs = new PromiseHandler(require("./get-votelogs"));
 
   app.route("/api/loadPinterest").get(loadPinterest.jsonp("load"));
   app.route("/api/getImage/:imageId").get(getImage.jsonp("get"));
@@ -16,4 +17,5 @@ module.exports = app => {
   app
     .route("/api/getResultsForImage/:imageId")
     .get(getResultsForImage.jsonp("get"));
+  app.route("/api/getVoteLogs").get(getVoteLogs.jsonp("get"));
 };

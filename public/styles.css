@@ -23,6 +23,12 @@ body {
   max-width: 780px;
   padding: 0 15px;
 }
+
+.viz_container {
+  width: auto;
+  padding: 0 15px;
+  background: #f8f8f8;
+}
 .jumbotron {
   margin-top: 20px;
 }

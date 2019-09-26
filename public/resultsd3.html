@@ -1,74 +1,55 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<head>
+  <title>Vote Visualization</title>
+  <link href="https://fonts.googleapis.com/css?family=Merriweather|Montserrat&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="http://vizjs.org/viz.v1.1.0.min.js"></script>
+  <script src="resultsd3.js"></script>
 
-.link {
-  stroke: #ccc;
-}
+  <style>
+  body {
+  }
 
-.node text {
-  pointer-events: none;
-  font: 10px sans-serif;
-}
+  svg text{
+    fill:grey;
+    font-size:11px;
+  }
+  svg .values text{
+    pointer-events:none;
+    stroke-width: 0.5px;
+  }
+  .groups:hover{
+    cursor:pointer;
+    font-weight:bold;
+  }
+  </style>
+</head>
 
-</style>
-<body>
-<script src="//d3js.org/d3.v3.min.js"></script>
-<script>
-var width = 960,
-    height = 500
+<body class="d-flex flex-column h-100">
+  <div class="viz_container results">
+        <h2 class="display-5">Results</h2>
+        <span id="viz" />
+  </div>
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-var force = d3.layout.force()
-    .gravity(0.05)
-    .distance(100)
-    .charge(-100)
-    .size([width, height]);
-
-d3.json("graph.json", function(error, json) {
-  if (error) throw error;
-
-  force
-      .nodes(json.nodes)
-      .links(json.links)
-      .start();
-
-  var link = svg.selectAll(".link")
-      .data(json.links)
-    .enter().append("line")
-      .attr("class", "link");
-
-  var node = svg.selectAll(".node")
-      .data(json.nodes)
-    .enter().append("g")
-      .attr("class", "node")
-      .call(force.drag);
-
-  node.append("image")
-      .attr("xlink:href", "https://github.com/favicon.ico")
-      .attr("x", -8)
-      .attr("y", -8)
-      .attr("width", 16)
-      .attr("height", 16);
-
-  node.append("text")
-      .attr("dx", 12)
-      .attr("dy", ".35em")
-      .text(function(d) { return d.name });
-
-  force.on("tick", function() {
-    link.attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
-        .attr("x2", function(d) { return d.target.x; })
-        .attr("y2", function(d) { return d.target.y; });
-
-    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-  });
-});
-
-</script>
+  <!-- footer -->
+  <div class="footer mt-auto py-3">
+    <div class="container">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link disabled" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="privacy.html">Privacy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="support.html">Support</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </body>
 </html>
